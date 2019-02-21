@@ -48,7 +48,7 @@ vertical-align: top;
   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
   crossorigin="anonymous"></script>
 <script>
-$(function(){
+$(window).on('load', function(){
 	var	slides = $('.js_wiper'),
 		slide = slides.find('.slide'),
 		slideW = slide.outerWidth(true),
