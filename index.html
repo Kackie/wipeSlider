@@ -28,14 +28,15 @@ vertical-align: top;
 </head>
 <body>
 
-<ul class="slides js_wiper">
+<div class="js_wiper">
+<ul class="slides">
 <li class="slide"><img src="https://dummyimage.com/980x500/ccc/fff&text=1" alt=""></li>
 <li class="slide"><img src="https://dummyimage.com/980x500/bbb/fff&text=2" alt=""></li>
 <li class="slide"><img src="https://dummyimage.com/980x500/aaa/fff&text=3" alt=""></li>
 <li class="slide"><img src="https://dummyimage.com/980x500/999/fff&text=4" alt=""></li>
 <li class="slide"><img src="https://dummyimage.com/980x500/888/fff&text=5" alt=""></li>
-</ul><!-- / .slides js_wiper -->
-
+</ul><!-- / .slides -->
+</div><!-- / .js_wiper -->
 
 <script
   src="https://code.jquery.com/jquery-1.12.4.min.js"
@@ -43,25 +44,21 @@ vertical-align: top;
   crossorigin="anonymous"></script>
 <script>
 $(window).on('load', function(){
-	var	slides = $('.js_wiper'),
+	var	slidesWrap = $('.js_wiper');
+		slides = slidesWrap.find('.slides'),
 		slide = slides.find('.slide'),
 		slideW = slide.outerWidth(true),
 		slideH = slide.outerHeight(true),
 		length = slide.length - 1,
-		transition = 1000, //アニメーション時間
-		duration = 4000; //スライド表示時間
+		transition = 500, //アニメーション時間
+		duration = 2000; //スライド表示時間
 	slide.eq(0).addClass('active');
 	
 	//スライド用のクラス切り替え
-	var num = 0;
+	var slideNum = 0;
 	var wiper = function(){
-		if(num < length){
-			num++;
-		} else {
-			num = 0;
-		}
 		slide.removeClass('active');
-		slide.eq(num).addClass('active').css({
+		slide.eq(slideNum).addClass('active').css({
 			clip: 'rect(0px,'+ slideW +'px,'+ slideH +'px,0)',
 			'z-index':'2'
 		});
@@ -75,7 +72,15 @@ $(window).on('load', function(){
 			});
 		},transition);
 	};
-	setInterval(wiper, duration);
+	var autoWiper = function(){
+		if(slideNum < length){
+			slideNum++;
+		} else {
+			slideNum = 0;
+		}
+		wiper();
+	};
+	setInterval(autoWiper, duration);
 	
 	//スライドのアニメーション作成
 	slide.css({
@@ -85,6 +90,34 @@ $(window).on('load', function(){
 	});
 	slide.filter(':nth-child(n+2)').css({
 		clip: 'rect(0,0,' + slideH +'px,0)',
+	});
+
+	//コントローラー作成
+	var	controllL = '<button class="prevBtn">prev</button>',
+		controllR = '<button class="nextBtn">next</button>'
+	var controllerHTML = '<div class="controlls">' + controllL + controllR + '<div>';
+	slidesWrap.append(controllerHTML);
+	slidesWrap.find(('button')).click(function(){
+		if($(this).hasClass('nextBtn')){
+			slideNum++;
+		} else {
+			slideNum--;
+		}
+		wiper();
+	});
+	
+	//ページャー作成
+	var pagerHTML = '';
+	for(var i=0;i<length+1;i++){
+		var pagerLength = i+1;
+		pagerHTML += '<li><button>' + pagerLength + '</button></li>';
+	}
+	pagerHTML = '<ul class="pager">' + pagerHTML + '</ul>';
+	slidesWrap.append(pagerHTML);
+	//ページャークリックでスライド切り替え
+	slidesWrap.find('.pager button').click(function(){
+		slideNum = $('.pager button').index(this);
+		wiper();
 	});
 	
 });
