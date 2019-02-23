@@ -11,24 +11,105 @@ margin: 0;
 padding: 0;
 list-style-type: none;	
 }
+.slidesWrap{
+position: relative;
+}
 .slides{
-width: 980px;
-height: 500px;
 position: relative;
 }
 .slides .slide{
 position: absolute;
 top: 0;
 left: 0;
+opacity: 0;
 }
 img{
 vertical-align: top;
+}
+.slidesWrap .controlls button,
+.slidesWrap .pager button{
+-webkit-appearance: none;
+box-shadow: none;
+border: none;
+background: none;
+padding: 0;
+margin: 0;
+}
+.slidesWrap .pager ul{
+list-style-type: none;
+}
+.slidesWrap .controlls{
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+width: 100%;
+z-index: 3;
+display: flex;
+align-items: center;
+pointer-events: none
+}
+.slidesWrap .controlls button{
+pointer-events: auto;
+cursor: pointer;
+text-indent: -9999px;
+width: 50px;
+height: 100%;
+position: relative;
+}
+.slidesWrap .controlls button:after{
+content: '';
+display: block;
+width: 20px;
+height: 20px;
+box-sizing: border-box;
+border-top: 2px solid #fff;
+border-right: 2px solid #fff;
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+margin: auto;
+}
+.slidesWrap .controlls .prevBtn:after{
+	transform: rotate(-135deg);
+}
+.slidesWrap .controlls .nextBtn{
+margin-left: auto;
+}
+.slidesWrap .controlls .nextBtn:after{
+transform: rotate(45deg);
+}
+.slidesWrap .pager{
+position: absolute;
+display: flex;
+justify-content: center;
+align-items: center;
+bottom: 10px;
+left: 0;
+right: 0;
+z-index: 3;
+}
+.slidesWrap .pager li + li{
+margin-left: 10px;
+}
+.slidesWrap .pager li button{
+display: block;
+text-indent: -9999px;
+width: 15px;
+height: 15px;
+border-radius: 50%;
+background: #fff;
+}
+.slidesWrap .pager li button.current{
+background: #000;
 }
 </style>
 </head>
 <body>
 
-<div class="js_wiper">
+<div class="slidesWrap js_wiper">
 <ul class="slides">
 <li class="slide"><img src="https://dummyimage.com/980x500/ccc/fff&text=1" alt=""></li>
 <li class="slide"><img src="https://dummyimage.com/980x500/bbb/fff&text=2" alt=""></li>
@@ -71,8 +152,12 @@ $(window).on('load', function(){
 				'z-index':''
 			});
 		},transition);
+		slidesWrap.find('.pager li button').removeClass('current');
+		slidesWrap.find('.pager li button').eq(slideNum).addClass('current');
 	};
-	var autoWiper = function(){
+
+	//自動再生
+	var slideNumSet = function(){
 		if(slideNum < length){
 			slideNum++;
 		} else {
@@ -80,13 +165,37 @@ $(window).on('load', function(){
 		}
 		wiper();
 	};
-	setInterval(autoWiper, duration);
+	var autoWiper = setInterval(slideNumSet, duration);
+
+	//オートタイマーの再設定
+	var resetCount,retetTimer;
+	timerReset = function(){
+		clearInterval(autoWiper);
+		resetCount = 0;
+		clearInterval(retetTimer);
+		retetTimer = setInterval(function(){
+			if(resetCount < 4){
+				resetCount++;
+			} else {
+				clearInterval(retetTimer);
+				autoWiper = setInterval(slideNumSet, duration);
+			}
+		}, 1000);
+	};
 	
 	//スライドのアニメーション作成
+	slidesWrap.css({
+		width:slideW
+	});
+	slides.css({
+		width:slideW,
+		height:slideH
+	});
 	slide.css({
 		width:slideW,
 		height:slideH,
-		transition:'clip ' + transition/1000 + 's'
+		transition:'clip ' + transition/1000 + 's',
+		opacity:1
 	});
 	slide.filter(':nth-child(n+2)').css({
 		clip: 'rect(0,0,' + slideH +'px,0)',
@@ -97,13 +206,24 @@ $(window).on('load', function(){
 		controllR = '<button class="nextBtn">next</button>'
 	var controllerHTML = '<div class="controlls">' + controllL + controllR + '<div>';
 	slidesWrap.append(controllerHTML);
-	slidesWrap.find(('button')).click(function(){
-		if($(this).hasClass('nextBtn')){
-			slideNum++;
-		} else {
-			slideNum--;
+	slidesWrap.find('.prevBtn').click(function(){
+		if(slideNum === 0){
+			slideNum = length;
+		}else{
+			slideNum--
 		}
+		timerReset();
 		wiper();
+	});
+	slidesWrap.find('.nextBtn').click(function(){
+		if(slideNum === length){
+			slideNum = 0;
+		}else{
+			slideNum++;
+		}
+		timerReset();
+		wiper();
+		console.log(length,slideNum);
 	});
 	
 	//ページャー作成
@@ -114,12 +234,21 @@ $(window).on('load', function(){
 	}
 	pagerHTML = '<ul class="pager">' + pagerHTML + '</ul>';
 	slidesWrap.append(pagerHTML);
+	slidesWrap.find('.pager li button').eq(0).addClass('current');
 	//ページャークリックでスライド切り替え
 	slidesWrap.find('.pager button').click(function(){
 		slideNum = $('.pager button').index(this);
+		timerReset();
 		wiper();
 	});
 	
+	//別タブが開かれたときにオート再生を止め、戻ったときに再開する
+	$(window).bind("focus",function(){
+			clearInterval(autoWiper);
+			autoWiper = setInterval(slideNumSet, duration);
+		}).bind("blur",function(){
+			clearInterval(autoWiper);
+		});
 });
 </script>
 </body>
