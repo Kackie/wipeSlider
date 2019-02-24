@@ -5,88 +5,125 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Document</title>
+<link rel="stylesheet" href="css/wipeSlider.css">
 <style>
 ul{
 margin: 0;
 padding: 0;
 list-style-type: none;	
 }
-.slides{
-width: 980px;
-height: 500px;
-position: relative;
-}
-.slides .slide{
-position: absolute;
-top: 0;
-left: 0;
-}
 img{
 vertical-align: top;
+}
+.slidesWrap .controlls button,
+.slidesWrap .pager button{
+-webkit-appearance: none;
+box-shadow: none;
+border: none;
+background: none;
+padding: 0;
+margin: 0;
+}
+.slidesWrap .pager ul{
+list-style-type: none;
+}
+.slidesWrap .controlls{
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+width: 100%;
+z-index: 3;
+display: flex;
+align-items: center;
+pointer-events: none
+}
+.slidesWrap button{
+cursor: pointer;
+}
+.slidesWrap .controlls button{
+pointer-events: auto;
+text-indent: -9999px;
+width: 50px;
+height: 100%;
+position: relative;
+}
+.slidesWrap .controlls button:after{
+content: '';
+display: block;
+width: 20px;
+height: 20px;
+box-sizing: border-box;
+border-top: 2px solid #fff;
+border-right: 2px solid #fff;
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+margin: auto;
+}
+.slidesWrap .controlls .prevBtn:after{
+	transform: rotate(-135deg);
+}
+.slidesWrap .controlls .nextBtn{
+margin-left: auto;
+}
+.slidesWrap .controlls .nextBtn:after{
+transform: rotate(45deg);
+}
+.slidesWrap .pager{
+position: absolute;
+display: flex;
+justify-content: center;
+align-items: center;
+bottom: 10px;
+left: 0;
+right: 0;
+z-index: 3;
+}
+.slidesWrap .pager li + li{
+margin-left: 10px;
+}
+.slidesWrap .pager li button{
+display: block;
+text-indent: -9999px;
+width: 15px;
+height: 15px;
+border-radius: 50%;
+background: #fff;
+}
+.slidesWrap .pager li button.current{
+background: #000;
 }
 </style>
 </head>
 <body>
 
-<ul class="slides js_wiper">
+<div class="slidesWrap js_wiper">
+<ul class="slides">
 <li class="slide"><img src="https://dummyimage.com/980x500/ccc/fff&text=1" alt=""></li>
 <li class="slide"><img src="https://dummyimage.com/980x500/bbb/fff&text=2" alt=""></li>
 <li class="slide"><img src="https://dummyimage.com/980x500/aaa/fff&text=3" alt=""></li>
 <li class="slide"><img src="https://dummyimage.com/980x500/999/fff&text=4" alt=""></li>
 <li class="slide"><img src="https://dummyimage.com/980x500/888/fff&text=5" alt=""></li>
-</ul><!-- / .slides js_wiper -->
-
+</ul><!-- / .slides -->
+</div><!-- / .js_wiper -->
 
 <script
   src="https://code.jquery.com/jquery-1.12.4.min.js"
   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
   crossorigin="anonymous"></script>
+<script src="script/jquery.wipeSlider.js"></script>
 <script>
 $(window).on('load', function(){
-	var	slides = $('.js_wiper'),
-		slide = slides.find('.slide'),
-		slideW = slide.outerWidth(true),
-		slideH = slide.outerHeight(true),
-		length = slide.length - 1,
-		transition = 1000, //アニメーション時間
-		duration = 4000; //スライド表示時間
-	slide.eq(0).addClass('active');
-	
-	//スライド用のクラス切り替え
-	var num = 0;
-	var wiper = function(){
-		if(num < length){
-			num++;
-		} else {
-			num = 0;
-		}
-		slide.removeClass('active');
-		slide.eq(num).addClass('active').css({
-			clip: 'rect(0px,'+ slideW +'px,'+ slideH +'px,0)',
-			'z-index':'2'
-		});
-		setTimeout(function(){
-			slide.filter('.active').css({
-				'z-index':'1'
-			});
-			slide.not('.active').css({
-				clip: 'rect(0,0,' + slideH +'px,0)',
-				'z-index':''
-			});
-		},transition);
-	};
-	setInterval(wiper, duration);
-	
-	//スライドのアニメーション作成
-	slide.css({
-		width:slideW,
-		height:slideH,
-		transition:'clip ' + transition/1000 + 's'
+	$('.js_wiper').wipeSlider({
+		transition : 500,
+		duration : 2000,
+		auto : true,
+		pager : true,
+		controls : true
 	});
-	slide.filter(':nth-child(n+2)').css({
-		clip: 'rect(0,0,' + slideH +'px,0)',
-	});
-	
 });
 </script>
 </body>
