@@ -1,7 +1,7 @@
-///////////////////////////////////////////
+/*//////////////////////////////////////////
 Author : Kackie(https://github.com/Kackie)
 created: 2019/02/23
-///////////////////////////////////////////
+//////////////////////////////////////////*/
 ;$(function(){
     $.fn.wipeSlider = function(options){
 		var opts = $.extend({}, $.fn.wipeSlider.defaults, options);
@@ -18,12 +18,16 @@ created: 2019/02/23
         var wiper = function(){
             slide.removeClass('active');
             slide.eq(slideNum).addClass('active').css({
+				'backface-visibility': 'hidden',
+				'will-change': 'clip',
                 clip: 'rect(0px,'+ slideW +'px,'+ slideH +'px,0)',
                 'z-index':'2'
             });
             setTimeout(function(){
                 slide.filter('.active').css({
-                    'z-index':'1'
+					'z-index':'1',
+					'backface-visibility': '',
+					'will-change': 'unset'
                 });
                 slide.not('.active').css({
                     clip: 'rect(0,0,' + slideH +'px,0)',
