@@ -38,9 +38,11 @@ display: flex;
 align-items: center;
 pointer-events: none
 }
+.slidesWrap button{
+cursor: pointer;
+}
 .slidesWrap .controlls button{
 pointer-events: auto;
-cursor: pointer;
 text-indent: -9999px;
 width: 50px;
 height: 100%;
@@ -115,7 +117,13 @@ background: #000;
 <script src="script/jquery.wipeSlider.js"></script>
 <script>
 $(window).on('load', function(){
-	$('.js_wiper').wipeSlider();
+	$('.js_wiper').wipeSlider({
+		transition : 500,
+		duration : 2000,
+		auto : true,
+		pager : true,
+		controls : true
+	});
 });
 </script>
 </body>
