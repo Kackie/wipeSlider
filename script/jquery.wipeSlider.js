@@ -11,12 +11,12 @@ created: 2019/02/23
             slideW = slide.outerWidth(true),
             slideH = slide.outerHeight(true),
 			length = slide.length - 1,
+			slideNum = 0,
 			backFlag = false;
 
         slide.eq(0).addClass('active');
-        
+
         //スライド用のクラス切り替え
-        var slideNum = 0;
         var wiper = function(){
 			slide.removeClass('active');
 			slide.eq(slideNum).addClass('active').css({
