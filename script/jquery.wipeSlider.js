@@ -149,6 +149,7 @@ created: 2019/02/23
 	};
 	$.fn.wipeSlider.defaults = {
 		transition : 500,
+		auto : false,
 		duration : 4000,
 		pager : true,
 		controls : true,
