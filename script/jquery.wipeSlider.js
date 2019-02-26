@@ -25,7 +25,7 @@ created: 2019/02/23
                 clip: 'rect(0px,'+ slideW +'px,'+ slideH +'px,0)',
                 'z-index':'2'
 			});
-			console.log(backFlag);
+			//console.log(backFlag);
             setTimeout(function(){
                 slide.filter('.active').css({
 					'z-index':'1',
