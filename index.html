@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<link rel="stylesheet" href="css/wipeSlider.css">
+<style>
+ul{
+margin: 0;
+padding: 0;
+list-style-type: none;	
+}
+img{
+vertical-align: top;
+}
+.slidesWrap .controlls button,
+.slidesWrap .pager button{
+-webkit-appearance: none;
+box-shadow: none;
+border: none;
+background: none;
+padding: 0;
+margin: 0;
+}
+.slidesWrap .pager ul{
+list-style-type: none;
+}
+.slidesWrap .controlls{
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+width: 100%;
+z-index: 3;
+display: flex;
+align-items: center;
+pointer-events: none
+}
+.slidesWrap button{
+cursor: pointer;
+}
+.slidesWrap .controlls button{
+pointer-events: auto;
+text-indent: -9999px;
+width: 50px;
+height: 100%;
+position: relative;
+}
+.slidesWrap .controlls button:after{
+content: '';
+display: block;
+width: 20px;
+height: 20px;
+box-sizing: border-box;
+border-top: 2px solid #fff;
+border-right: 2px solid #fff;
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+margin: auto;
+}
+.slidesWrap .controlls .prevBtn:after{
+	transform: rotate(-135deg);
+}
+.slidesWrap .controlls .nextBtn{
+margin-left: auto;
+}
+.slidesWrap .controlls .nextBtn:after{
+transform: rotate(45deg);
+}
+.slidesWrap .pager{
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 3;
+margin: 10px 0 0;
+}
+.slidesWrap .pager li + li{
+margin-left: 10px;
+}
+.slidesWrap .pager li button{
+display: block;
+text-indent: -9999px;
+width: 15px;
+height: 15px;
+border-radius: 50%;
+background: #fff;
+border: 1px solid #000;
+box-sizing: border-box;
+}
+.slidesWrap .pager li button.current{
+background: #000;
+}
+
+.m_img{
+position: relative;
+margin: 0;
+padding: 0;
+}
+.m_img .cap{
+position: absolute;
+left: 0;
+bottom: 0;
+width: 100%;
+background: rgba(0,0,0,0.7);
+color: #fff;
+padding: 10px;
+box-sizing: border-box;
+}
+.m_innerBox{
+background: rgba(0,0,0,0.7);
+color: #fff;
+padding: 10px;
+}
+.slide .m_innerBox{
+position: absolute;
+bottom: 50px;
+right: 50px;
+padding: 20px;
+
+}
+.slide .m_innerBox.s_animation{
+opacity: 0;
+transform: translateX(20px);
+transition: 0.3s 0.5s;
+}
+.slide.active .m_innerBox.s_animation{
+opacity: 1;
+transform: translateX(0);
+}
+</style>
+</head>
+<body>
+<div class="slidesWrap js_wiper">
+<ul class="slides">
+<li class="slide">
+<img src="https://dummyimage.com/980x500/ccc/fff&text=1" alt="">
+<div class="m_innerBox">
+<p>スライド内にHTMLも入るよ</p>
+</div><!-- /.m_innerBox -->
+</li>
+<li class="slide"><img src="https://dummyimage.com/980x500/bbb/fff&text=2" alt="">
+<div class="m_innerBox s_animation">
+<p>表示中のスライドにはactiveクラスがつくよ</p>
+</div><!-- /.m_innerBox -->
+</li>
+<li class="slide"><img src="https://dummyimage.com/980x500/aaa/fff&text=3" alt="">
+<div class="m_innerBox">
+<p>ページャー、コントローラーのHTMLはJSで生成されるよ</p>
+</div><!-- /.m_innerBox -->
+</li>
+<li class="slide"><img src="https://dummyimage.com/980x500/999/fff&text=4" alt=""></li>
+<li class="slide"><img src="https://dummyimage.com/980x500/888/fff&text=5" alt=""></li>
+</ul><!-- / .slides -->
+</div><!-- / .js_wiper -->
+
+<script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+<script src="script/jquery.wipeSlider.js"></script>
+<script>
+$(window).on('load', function(){
+	$('.js_wiper').wipeSlider({
+		transition : 500,
+		duration : 2000,
+		auto : true,
+		pager : true,
+		controls : true
+	});
+});
+</script>
+</body>
+</html>

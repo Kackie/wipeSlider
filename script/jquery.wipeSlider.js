@@ -10,19 +10,22 @@ created: 2019/02/23
             slide = slides.find('.slide'),
             slideW = slide.outerWidth(true),
             slideH = slide.outerHeight(true),
-            length = slide.length - 1;
+			length = slide.length - 1,
+			slideNum = 0,
+			backFlag = false;
+
         slide.eq(0).addClass('active');
-        
+
         //スライド用のクラス切り替え
-        var slideNum = 0;
         var wiper = function(){
-            slide.removeClass('active');
-            slide.eq(slideNum).addClass('active').css({
+			slide.removeClass('active');
+			slide.eq(slideNum).addClass('active').css({
 				'backface-visibility': 'hidden',
 				'will-change': 'clip',
                 clip: 'rect(0px,'+ slideW +'px,'+ slideH +'px,0)',
                 'z-index':'2'
-            });
+			});
+			console.log(backFlag);
             setTimeout(function(){
                 slide.filter('.active').css({
 					'z-index':'1',
@@ -32,7 +35,7 @@ created: 2019/02/23
                 slide.not('.active').css({
                     clip: 'rect(0,0,' + slideH +'px,0)',
                     'z-index':''
-                });
+				});
             },opts.transition);
             slidesWrap.find('.pager li button').removeClass('current');
             slidesWrap.find('.pager li button').eq(slideNum).addClass('current');
@@ -99,6 +102,7 @@ created: 2019/02/23
 				}else{
 					slideNum--
 				}
+				backFlag = true;
 				timerReset();
 				wiper();
 			});
@@ -108,6 +112,7 @@ created: 2019/02/23
 				}else{
 					slideNum++;
 				}
+				backFlag = false;
 				timerReset();
 				wiper();
 			});
@@ -125,9 +130,12 @@ created: 2019/02/23
 			slidesWrap.find('.pager li button').eq(0).addClass('current');
 			//ページャークリックでスライド切り替え
 			slidesWrap.find('.pager button').click(function(){
-				slideNum = $('.pager button').index(this);
-				timerReset();
-				wiper();
+				if(!$(this).hasClass('current')){
+					backFlag = ($('.pager button').index(this) < slideNum) ? true : false;
+					slideNum = $('.pager button').index(this);
+					timerReset();
+					wiper();
+				}
 			});
 		}
         
@@ -143,6 +151,7 @@ created: 2019/02/23
 		transition : 500,
 		duration : 4000,
 		pager : true,
-		controls : true
+		controls : true,
+		backAnim : true
 	};
 });
