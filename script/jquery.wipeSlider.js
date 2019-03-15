@@ -10,7 +10,7 @@ created: 2019/02/23
 			duration : 4000,
 			pager : true,
 			controls : true,
-			backAnim : true
+			direction : 'horizontal'
 		};
 		var opts = $.extend({}, $.fn.wipeSlider.defaults, options);
 		
@@ -36,14 +36,52 @@ created: 2019/02/23
 					'will-change': 'clip',
 					'z-index':'2'
 				});
-				if(opts.backAnim === true){
+				if(opts.direction === 'vertical') {
 					if(backFlag === true){
-						toLeftAnim();
+						toTop();
 					}else{
-						toRightAnim();
+						toBottom();
 					}
-				} else {
-					toRightAnim();
+				}else if(opts.direction === 'four'){
+					if(backFlag === true){
+						switch((slideNum+1)%4){
+							case 3:
+								toLeft();
+								break;
+							case 0:
+								toTop();
+								break;
+							case 1:
+								toRight();
+								break;
+							case 2:
+								toBottom();
+								break;
+						}
+					}else{
+						switch((slideNum+1)%4){
+							case 0:
+								toRight();
+								break;
+							case 1:
+								toBottom();
+								break;
+							case 2:
+								toLeft();
+								break;
+							case 3:
+								toTop();
+								break;
+						}
+					}
+				}else if(opts.direction === 'custom'){
+					
+				}else{
+					if(backFlag === true){
+						toLeft();
+					}else{
+						toRight();
+					}
 				}
 				//console.log(backFlag);
 				slidesWrap.find('.pager li button').removeClass('current');
@@ -102,7 +140,7 @@ created: 2019/02/23
 				'z-index':1
 			});
 			
-			var toRightAnim = function(){
+			var toRight = function(){
 				slide.filter(':nth-child('+ (slideNum+1) +')').css({
 					clip:'rect(0,0,'+slideH+'px,0)'
 				}).animate(
@@ -121,7 +159,7 @@ created: 2019/02/23
 				);
 			};
 		
-			var toLeftAnim = function(){
+			var toLeft = function(){
 				slide.filter(':nth-child('+ (slideNum+1) +')').css({
 					clip:'rect(0, '+slideW+'px, '+slideH+'px, '+slideW+'px)'
 				}).animate(
@@ -140,7 +178,7 @@ created: 2019/02/23
 				);
 			};
 		
-			var toBottomAnim = function(){
+			var toBottom = function(){
 				slide.filter(':nth-child('+ (slideNum+1) +')').css({
 					clip:'rect(0, '+slideW+'px,0,0)'
 				}).animate(
@@ -159,7 +197,7 @@ created: 2019/02/23
 				);
 			};
 		
-			var toTopAnim = function(){
+			var toTop = function(){
 				slide.filter(':nth-child('+ (slideNum+1) +')').css({
 					clip:'rect('+slideH+'px, '+slideW+'px,'+slideH+'px,0)'
 				}).animate(
