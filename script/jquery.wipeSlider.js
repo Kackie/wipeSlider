@@ -22,21 +22,18 @@ created: 2019/02/23
 			slide.eq(slideNum).addClass('active').css({
 				'backface-visibility': 'hidden',
 				'will-change': 'clip',
-                clip: 'rect(0px,'+ slideW +'px,'+ slideH +'px,0)',
-                'z-index':'2'
+				'z-index':'2'
 			});
+			if(opts.backAnim === true){
+				if(backFlag === true){
+					toLeftAnim();
+				}else{
+					toRightAnim();
+				}
+			} else {
+				toRightAnim();
+			}
 			//console.log(backFlag);
-            setTimeout(function(){
-                slide.filter('.active').css({
-					'z-index':'1',
-					'backface-visibility': '',
-					'will-change': 'unset'
-                });
-                slide.not('.active').css({
-                    clip: 'rect(0,0,' + slideH +'px,0)',
-                    'z-index':''
-				});
-            },opts.transition);
             slidesWrap.find('.pager li button').removeClass('current');
             slidesWrap.find('.pager li button').eq(slideNum).addClass('current');
         };
@@ -83,12 +80,93 @@ created: 2019/02/23
         slide.css({
             width:slideW,
             height:slideH,
-            transition:'clip ' + opts.transition/1000 + 's',
             opacity:1
-        });
-        slide.filter(':nth-child(n+2)').css({
-            clip: 'rect(0,0,' + slideH +'px,0)',
-        });
+		});
+		slide.filter(':first-child').css({
+			'z-index':2
+		});
+		slide.filter(':nth-child(2)').css({
+			'z-index':1
+		});
+		
+		var toRightAnim = function(){
+			slide.eq(slideNum).css({
+				clip:'rect(0,0,'+slideH+'px,0)'
+			}).animate(
+				{zIndex: slideW},
+				{duration:opts.transition,
+				complete: function(){
+					animCallback();
+				},
+				step: function(now, fx){
+					slide.eq(slideNum).css({
+						clip:'rect(0,'+now+'px,'+slideH+'px,0)'
+					});
+				}},
+			);
+		};
+	
+		var toLeftAnim = function(){
+			slide.eq(slideNum).css({
+				clip:'rect(0, '+slideW+'px, '+slideH+'px, '+slideW+'px)'
+			}).animate(
+				{zIndex: slideW},
+				{duration:opts.transition,
+				complete: function(){
+					animCallback();
+				},
+				step: function(now, fx){
+					slide.eq(slideNum).css({
+						clip:'rect(0, '+slideW+'px, '+slideH+'px, '+(slideW-now)+'px)'
+					});
+				}},
+			);
+		};
+	
+		var toBottomAnim = function(){
+			slide.eq(slideNum).css({
+				clip:'rect(0, '+slideW+'px,0,0)'
+			}).animate(
+				{zIndex: slideH},
+				{duration:opts.transition,
+				complete: function(){
+					animCallback();
+				},
+				step: function(now, fx){
+					slide.eq(slideNum).css({
+						clip:'rect(0, '+slideW+'px,'+ now +'px,0)'
+					});
+				}},
+			);
+		};
+	
+		var toTopAnim = function(){
+			slide.eq(slideNum).css({
+				clip:'rect('+slideH+'px, '+slideW+'px,'+slideH+'px,0)'
+			}).animate(
+				{zIndex: slideH},
+				{duration:opts.transition,
+				complete: function(){
+					animCallback();
+				},
+				step: function(now, fx){
+					slide.eq(slideNum).css({
+						clip:'rect('+(slideH-now)+'px, '+slideW+'px,'+slideH+'px,0)'
+					});
+				}},
+			);
+		};
+
+		var animCallback = function(){
+			slide.filter('.active').css({
+				'z-index':'1',
+				'backface-visibility': '',
+				'will-change': 'unset'
+			});
+			slide.not('.active').css({
+				'z-index':''
+			});
+		};
 
 		//コントローラー作成
 		if(opts.controls === true){
