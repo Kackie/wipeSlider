@@ -41,6 +41,7 @@ created: 2019/02/23
 		//自動再生
 		if(opts.auto === true){
 			var slideNumSet = function(){
+				backFlag = false;
 				if(slideNum < length){
 					slideNum++;
 				} else {
