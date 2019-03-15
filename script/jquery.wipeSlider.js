@@ -95,15 +95,17 @@ created: 2019/02/23
 				clip:'rect(0,0,'+slideH+'px,0)'
 			}).animate(
 				{zIndex: slideW},
-				{duration:opts.transition,
-				complete: function(){
-					animCallback();
-				},
-				step: function(now, fx){
-					slide.eq(slideNum).css({
-						clip:'rect(0,'+now+'px,'+slideH+'px,0)'
-					});
-				}},
+				{
+					duration:opts.transition,
+					complete: function(){
+						animCallback();
+					},
+					step: function(now, fx){
+						slide.eq(slideNum).css({
+							clip:'rect(0,'+now+'px,'+slideH+'px,0)'
+						});
+					}
+				}
 			);
 		};
 	
@@ -112,15 +114,17 @@ created: 2019/02/23
 				clip:'rect(0, '+slideW+'px, '+slideH+'px, '+slideW+'px)'
 			}).animate(
 				{zIndex: slideW},
-				{duration:opts.transition,
-				complete: function(){
-					animCallback();
-				},
-				step: function(now, fx){
-					slide.eq(slideNum).css({
-						clip:'rect(0, '+slideW+'px, '+slideH+'px, '+(slideW-now)+'px)'
-					});
-				}},
+				{
+					duration:opts.transition,
+					complete: function(){
+						animCallback();
+					},
+					step: function(now, fx){
+						slide.eq(slideNum).css({
+							clip:'rect(0, '+slideW+'px, '+slideH+'px, '+(slideW-now)+'px)'
+						});
+					}
+				}
 			);
 		};
 	
@@ -129,15 +133,17 @@ created: 2019/02/23
 				clip:'rect(0, '+slideW+'px,0,0)'
 			}).animate(
 				{zIndex: slideH},
-				{duration:opts.transition,
-				complete: function(){
-					animCallback();
-				},
-				step: function(now, fx){
-					slide.eq(slideNum).css({
-						clip:'rect(0, '+slideW+'px,'+ now +'px,0)'
-					});
-				}},
+				{
+					duration:opts.transition,
+					complete: function(){
+						animCallback();
+					},
+					step: function(now, fx){
+						slide.eq(slideNum).css({
+							clip:'rect(0, '+slideW+'px,'+ now +'px,0)'
+						});
+					}
+				}
 			);
 		};
 	
@@ -146,15 +152,17 @@ created: 2019/02/23
 				clip:'rect('+slideH+'px, '+slideW+'px,'+slideH+'px,0)'
 			}).animate(
 				{zIndex: slideH},
-				{duration:opts.transition,
-				complete: function(){
-					animCallback();
-				},
-				step: function(now, fx){
-					slide.eq(slideNum).css({
-						clip:'rect('+(slideH-now)+'px, '+slideW+'px,'+slideH+'px,0)'
-					});
-				}},
+				{
+					duration:opts.transition,
+					complete: function(){
+						animCallback();
+					},
+					step: function(now, fx){
+						slide.eq(slideNum).css({
+							clip:'rect('+(slideH-now)+'px, '+slideW+'px,'+slideH+'px,0)'
+						});
+					}
+				}
 			);
 		};
 
