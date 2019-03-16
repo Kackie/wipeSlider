@@ -75,7 +75,38 @@ created: 2019/02/23
 						}
 					}
 				}else if(opts.direction === 'custom'){
-					
+					if(backFlag === true){
+						backNum = (slideNum === length) ? 0 : slideNum+1;
+						switch(slide.filter(':nth-child('+ (backNum+1) +')').data('dir')){
+							case 'toLeft':
+								toRight();
+								break;
+							case 'toRight':
+								toLeft();
+								break;
+							case 'toTop':
+								toBottom();
+								break;
+							case 'toBottom':
+								toTop();
+								break;
+						}
+					}else{
+						switch(slide.filter(':nth-child('+ (slideNum+1) +')').data('dir')){
+							case 'toLeft':
+								toLeft();
+								break;
+							case 'toRight':
+								toRight();
+								break;
+							case 'toTop':
+								toTop();
+								break;
+							case 'toBottom':
+								toBottom();
+								break;
+						}
+					}
 				}else{
 					if(backFlag === true){
 						toLeft();
@@ -119,7 +150,6 @@ created: 2019/02/23
 					}, 1000);
 				}
 			};
-			
 			//スライドのアニメーション作成
 			slidesWrap.css({
 				width:slideW

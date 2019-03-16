@@ -15,6 +15,9 @@ list-style-type: none;
 img{
 vertical-align: top;
 }
+.slidesWrap{
+vertical-align: top;
+}
 .slidesWrap .controlls button,
 .slidesWrap .pager button{
 -webkit-appearance: none;
@@ -179,10 +182,10 @@ transform: translateX(0);
 
 <div class="slidesWrap js_wiper4" style="display:inline-block;">
 	<ul class="slides">
-	<li class="slide" data-dir="toLeft"><img src="https://dummyimage.com/200x200/ff0/fff&text=1" alt=""></li>
-	<li class="slide" data-dir="toRight"><img src="https://dummyimage.com/200x200/f00/fff&text=2" alt=""></li>
-	<li class="slide" data-dir="toBottom"><img src="https://dummyimage.com/200x200/00f/fff&text=3" alt=""></li>
-	<li class="slide" data-dir="toTop"><img src="https://dummyimage.com/200x200/008000/fff&text=4" alt=""></li>
+	<li class="slide" data-dir="toTop"><img src="https://dummyimage.com/200x200/ff0/fff&text=1" alt=""></li>
+	<li class="slide" data-dir="toLeft"><img src="https://dummyimage.com/200x200/f00/fff&text=2" alt=""></li>
+	<li class="slide" data-dir="toRight"><img src="https://dummyimage.com/200x200/00f/fff&text=3" alt=""></li>
+	<li class="slide" data-dir="toBottom"><img src="https://dummyimage.com/200x200/008000/fff&text=4" alt=""></li>
 	</ul><!-- / .slides -->
 	</div><!-- / .js_wiper -->
 	
@@ -212,11 +215,11 @@ $(window).on('load', function(){
 	});
 
 	$('.js_wiper3').wipeSlider({
-		transition : 500,
-		duration : 2000,
+		transition : 1000,
+		duration : 1200,
 		auto : true,
-		pager : true,
-		controls : true,
+		pager : false,
+		controls : false,
 		direction : 'four',
 	});
 
