@@ -18,8 +18,10 @@ created: 2019/02/23
 		this.each(function(index){
 
 			var	slidesWrap = $(this),
-				slides = slidesWrap.find('.slides'),
-				slide = slides.find('.slide'),
+				slides = (slidesWrap.children('.slides').length) ? 
+					slidesWrap.children('.slides')
+					:slidesWrap,
+				slide = slides.children('.slide'),
 				slideW = slide.outerWidth(true),
 				slideH = slide.outerHeight(true),
 				length = slide.length - 1,
@@ -36,7 +38,14 @@ created: 2019/02/23
 					'will-change': 'clip',
 					'z-index':'2'
 				});
-				if(opts.direction === 'vertical') {
+				if(opts.direction === 'horizontal'){
+					if(backFlag === true){
+						toLeft();
+					}else{
+						toRight();
+					}
+				}
+				else if(opts.direction === 'vertical') {
 					if(backFlag === true){
 						toTop();
 					}else{
@@ -108,15 +117,17 @@ created: 2019/02/23
 						}
 					}
 				}else{
-					if(backFlag === true){
-						toLeft();
-					}else{
-						toRight();
-					}
+					setTimeout(
+						animCallback(),
+						opts.transition
+					)
 				}
 				//console.log(backFlag);
 				slidesWrap.find('.pager li button').removeClass('current');
 				slidesWrap.find('.pager li').filter(':nth-child('+ (slideNum+1) +')').find('button').addClass('current');
+				if (typeof options.slideAfter === 'function') {
+					options.slideAfter(slideNum,length);
+				}
 			};
 
 			//自動再生
@@ -248,12 +259,12 @@ created: 2019/02/23
 
 			var animCallback = function(){
 				slide.filter('.active').css({
-					'z-index':'1',
+					'z-index':'1'
+				});
+				slide.filter(':not(.active)').css({
+					'z-index':'',
 					'backface-visibility': '',
 					'will-change': 'unset'
-				});
-				slide.not('.active').css({
-					'z-index':''
 				});
 			};
 
@@ -299,8 +310,8 @@ created: 2019/02/23
 				slidesWrap.find('.pager button').click(function(){
 					console.log(slidesWrap.index());
 					if(!$(this).hasClass('current')){
-						backFlag = ($('.pager button').index(this) < slideNum) ? true : false;
-						slideNum = $('.pager button').index(this);
+						backFlag = ($(this).parent().index() < slideNum) ? true : false;
+						slideNum = $(this).parent().index();
 						timerReset();
 						wiper();
 					}
