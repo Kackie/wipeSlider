@@ -20,15 +20,17 @@
 .slides .slide:first-child{
 }
 .slides .slide.active{
-    animation:clip 1s both;
+    animation:display 1s both;
     z-index: 1;
 }
-@keyframes clip{
-    from{
-        clip-path: circle(0px at center);
+@keyframes display{
+    0%{
+        transform:scale(0.8);
+        opacity:0;
     }
-    to{
-        clip-path: circle(300px at center);
+    100%{
+        transform:scale(1);
+        opacity:1;
     }
 }
 </style>
@@ -58,12 +60,7 @@ $('.js_wiper').wipeSlider({
     controls : true,
     direction : 'test',
     slideAfter : function(slideNum,length){
-        var resetNum = (slideNum === length) ? 0 : slideNum;
-        var compFunc = function(){
-            $('.js_wiper .slide:nth-child('+(resetNum)+')').css({
-                'z-index': ''
-            });
-        };
+
     }
 });
 
