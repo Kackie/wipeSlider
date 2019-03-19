@@ -127,8 +127,16 @@ created: 2019/02/23
 				//console.log(backFlag);
 				slidesWrap.find('.pager li button').removeClass('current');
 				slidesWrap.find('.pager li').filter(':nth-child('+ (slideNum+1) +')').find('button').addClass('current');
+				if (typeof options.slideBefore === 'function') {
+					options.slideBefore(slideNum,length);
+				}
 				if (typeof options.slideAfter === 'function') {
-					options.slideAfter(slideNum,length);
+					setTimeout(
+						function(){
+							options.slideAfter(slideNum,length);
+						}
+						,options.transition
+					);
 				}
 			};
 
