@@ -137,8 +137,17 @@ opacity: 1;
 transform: translateX(0);
 }
 .slidesArea{
-	display: flex;
-	margin-top: 20px;
+display: flex;
+margin-top: 20px;
+}
+
+@media screen and (max-width: 768px) {
+.slidesWrap .slides .slide img{
+width: 100%;
+}
+.slidesArea{
+display: block;
+}
 }
 </style>
 </head>
@@ -176,16 +185,16 @@ transform: translateX(0);
 		</ul><!-- / .slides -->
 	</div><!-- / .js_wiper -->
 	<div class="cmt">
-		<pre class="source">
-			$('.js_wiper2').wipeSlider({
-				transition : 500,
-				duration : 2000,
-				auto : true,
-				pager : true,
-				controls : true,
-				direction : 'vertical',
-			});
-		</pre><!-- /.source -->
+<pre class="source"><code>
+$('.js_wiper2').wipeSlider({
+	transition : 500,
+	duration : 2000,
+	auto : true,
+	pager : true,
+	controls : true,
+	direction : 'vertical',
+});
+</code></pre><!-- /.source -->
 	</div><!-- /.cmt -->
 </div><!-- /.slidesArea -->
 
@@ -199,16 +208,16 @@ transform: translateX(0);
 	</ul><!-- / .slides -->
 	</div><!-- / .js_wiper -->
 	<div class="cmt">
-		<pre class="source">
-			$('.js_wiper3').wipeSlider({
-				transition : 300,
-				duration : 1200,
-				auto : true,
-				pager : false,
-				controls : false,
-				direction : 'four',
-			});
-		</pre><!-- /.source -->
+<pre class="source"><code>
+$('.js_wiper3').wipeSlider({
+	transition : 300,
+	duration : 1200,
+	auto : true,
+	pager : false,
+	controls : false,
+	direction : 'four',
+});
+</code></pre><!-- /.source -->
 	</div><!-- /.cmt -->
 </div><!-- /.slidesArea -->
 
@@ -222,16 +231,16 @@ transform: translateX(0);
 	</ul><!-- / .slides -->
 	</div><!-- / .js_wiper -->
 	<div class="cmt">
-		<pre class="source">
-			$('.js_wiper4').wipeSlider({
-				transition : 500,
-				duration : 2000,
-				auto : true,
-				pager : true,
-				controls : true,
-				direction : 'custom',
-			});
-		</pre><!-- /.source -->
+<pre class="source"><code>
+$('.js_wiper4').wipeSlider({
+	transition : 500,
+	duration : 2000,
+	auto : true,
+	pager : true,
+	controls : true,
+	direction : 'custom',
+});
+</code></pre><!-- /.source -->
 	</div><!-- /.cmt -->
 </div><!-- /.slidesArea -->
 	
