@@ -59,8 +59,11 @@ $('.js_wiper').wipeSlider({
     pager : true,
     controls : true,
     direction : 'test',
+    slideBefore : function(slideNum,length){
+        console.log('スライドなう');
+    },
     slideAfter : function(slideNum,length){
-
+        console.log('スライド完了');
     }
 });
 
