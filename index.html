@@ -136,6 +136,10 @@ transition: 0.3s 0.5s;
 opacity: 1;
 transform: translateX(0);
 }
+.slidesArea{
+	display: flex;
+	margin-top: 20px;
+}
 </style>
 </head>
 <body>
@@ -162,25 +166,54 @@ transform: translateX(0);
 </ul><!-- / .slides -->
 </div><!-- / .js_wiper -->
 
-<div class="slidesWrap js_wiper2" style="display:inline-block;">
-<ul class="slides">
-<li class="slide"><img src="https://dummyimage.com/200x200/ff0/fff&text=1" alt=""></li>
-<li class="slide"><img src="https://dummyimage.com/200x200/f00/fff&text=2" alt=""></li>
-<li class="slide"><img src="https://dummyimage.com/200x200/00f/fff&text=3" alt=""></li>
-<li class="slide"><img src="https://dummyimage.com/200x200/008000/fff&text=4" alt=""></li>
-</ul><!-- / .slides -->
-</div><!-- / .js_wiper -->
+<div class="slidesArea">
+	<div class="slidesWrap js_wiper2">
+		<ul class="slides">
+		<li class="slide"><img src="https://dummyimage.com/200x200/ff0/fff&text=1" alt=""></li>
+		<li class="slide"><img src="https://dummyimage.com/200x200/f00/fff&text=2" alt=""></li>
+		<li class="slide"><img src="https://dummyimage.com/200x200/00f/fff&text=3" alt=""></li>
+		<li class="slide"><img src="https://dummyimage.com/200x200/008000/fff&text=4" alt=""></li>
+		</ul><!-- / .slides -->
+	</div><!-- / .js_wiper -->
+	<div class="cmt">
+		<pre class="source">
+			$('.js_wiper2').wipeSlider({
+				transition : 500,
+				duration : 2000,
+				auto : true,
+				pager : true,
+				controls : true,
+				direction : 'vertical',
+			});
+		</pre><!-- /.source -->
+	</div><!-- /.cmt -->
+</div><!-- /.slidesArea -->
 
-<div class="slidesWrap js_wiper3" style="display:inline-block;">
-<ul class="slides">
-<li class="slide"><img src="https://dummyimage.com/200x200/ff0/fff&text=1" alt=""></li>
-<li class="slide"><img src="https://dummyimage.com/200x200/f00/fff&text=2" alt=""></li>
-<li class="slide"><img src="https://dummyimage.com/200x200/00f/fff&text=3" alt=""></li>
-<li class="slide"><img src="https://dummyimage.com/200x200/008000/fff&text=4" alt=""></li>
-</ul><!-- / .slides -->
-</div><!-- / .js_wiper -->
+<div class="slidesArea">
+	<div class="slidesWrap js_wiper3">
+	<ul class="slides">
+	<li class="slide"><img src="https://dummyimage.com/200x200/ff0/fff&text=1" alt=""></li>
+	<li class="slide"><img src="https://dummyimage.com/200x200/f00/fff&text=2" alt=""></li>
+	<li class="slide"><img src="https://dummyimage.com/200x200/00f/fff&text=3" alt=""></li>
+	<li class="slide"><img src="https://dummyimage.com/200x200/008000/fff&text=4" alt=""></li>
+	</ul><!-- / .slides -->
+	</div><!-- / .js_wiper -->
+	<div class="cmt">
+		<pre class="source">
+			$('.js_wiper3').wipeSlider({
+				transition : 300,
+				duration : 1200,
+				auto : true,
+				pager : false,
+				controls : false,
+				direction : 'four',
+			});
+		</pre><!-- /.source -->
+	</div><!-- /.cmt -->
+</div><!-- /.slidesArea -->
 
-<div class="slidesWrap js_wiper4" style="display:inline-block;">
+<div class="slidesArea">
+	<div class="slidesWrap js_wiper4">
 	<ul class="slides">
 	<li class="slide" data-dir="toTop"><img src="https://dummyimage.com/200x200/ff0/fff&text=1" alt=""></li>
 	<li class="slide" data-dir="toLeft"><img src="https://dummyimage.com/200x200/f00/fff&text=2" alt=""></li>
@@ -188,6 +221,19 @@ transform: translateX(0);
 	<li class="slide" data-dir="toBottom"><img src="https://dummyimage.com/200x200/008000/fff&text=4" alt=""></li>
 	</ul><!-- / .slides -->
 	</div><!-- / .js_wiper -->
+	<div class="cmt">
+		<pre class="source">
+			$('.js_wiper4').wipeSlider({
+				transition : 500,
+				duration : 2000,
+				auto : true,
+				pager : true,
+				controls : true,
+				direction : 'custom',
+			});
+		</pre><!-- /.source -->
+	</div><!-- /.cmt -->
+</div><!-- /.slidesArea -->
 	
 
 <script
