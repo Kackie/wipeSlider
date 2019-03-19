@@ -79,6 +79,7 @@ $('.js_wiper').wipeSlider({
 |---|---|
 |slideNum|activeのスライドのindex番号を返します。|
 |length|スライダーのスライド数を返します。|
+
 下記のような記述になります。
 
 ``` jQuery
