@@ -60,6 +60,7 @@ $('.js_wiper').wipeSlider({
 |pager|ページャーを生成します。<br>初期値はtrue。|
 |controls|前後のスライドに切り替えるコントローラーを生成します。<br>初期値はtrue。|
 |direction|アニメーション方向を設定します。<br>初期値は'horizontal'。|
+|easing|ワイプアニメーションのeasingを設定します。<br>初期値は'linear'。|
 |slideBefore|スライド切り替えが始まったタイミングで発動するコールバックです。|
 |slideAfter|スライド切り替えが終わったタイミングで発動するコールバックです。|
 
