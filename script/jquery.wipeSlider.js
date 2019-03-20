@@ -10,7 +10,8 @@ created: 2019/02/23
 			duration : 4000,
 			pager : true,
 			controls : true,
-			direction : 'horizontal'
+			direction : 'horizontal',
+			easing : 'linear'
 		};
 		var opts = $.extend({}, $.fn.wipeSlider.defaults, options);
 		
@@ -198,6 +199,7 @@ created: 2019/02/23
 					{zIndex: slideW},
 					{
 						duration:opts.transition,
+						easing:opts.easing,
 						complete: function(){
 							animCallback();
 						},
@@ -217,6 +219,7 @@ created: 2019/02/23
 					{zIndex: slideW},
 					{
 						duration:opts.transition,
+						easing:opts.easing,
 						complete: function(){
 							animCallback();
 						},
@@ -236,6 +239,7 @@ created: 2019/02/23
 					{zIndex: slideH},
 					{
 						duration:opts.transition,
+						easing:opts.easing,
 						complete: function(){
 							animCallback();
 						},
@@ -255,6 +259,7 @@ created: 2019/02/23
 					{zIndex: slideH},
 					{
 						duration:opts.transition,
+						easing:opts.easing,
 						complete: function(){
 							animCallback();
 						},
