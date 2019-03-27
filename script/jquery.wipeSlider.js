@@ -14,7 +14,7 @@ created: 2019/02/23
 			easing : 'linear',
 			slideLength : 0,
 			slideNum : 0,
-			backFlag : 0
+			backFlag : false
 		};
 		var opts = $.extend({}, $.fn.wipeSlider.defaults, options);
 		
@@ -30,7 +30,7 @@ created: 2019/02/23
 				slideH = slide.outerHeight(true);
 
 			opts.slideLength = slide.length - 1,
-			opts.slideNum = 0,
+			opts.slideNum = 0,	
 			opts.backFlag = false;
 				
 			slide.filter(':first-child').addClass('active');
