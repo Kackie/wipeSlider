@@ -11,7 +11,10 @@ created: 2019/02/23
 			pager : true,
 			controls : true,
 			direction : 'horizontal',
-			easing : 'linear'
+			easing : 'linear',
+			slideLength : 0,
+			slideNum : 0,
+			backFlag : 0
 		};
 		var opts = $.extend({}, $.fn.wipeSlider.defaults, options);
 		
@@ -24,37 +27,38 @@ created: 2019/02/23
 					:slidesWrap,
 				slide = slides.children('.slide'),
 				slideW = slide.outerWidth(true),
-				slideH = slide.outerHeight(true),
-				length = slide.length - 1,
-				slideNum = 0,
-				backFlag = false;
+				slideH = slide.outerHeight(true);
+
+			opts.slideLength = slide.length - 1,
+			opts.slideNum = 0,
+			opts.backFlag = false;
 				
 			slide.filter(':first-child').addClass('active');
 
 			//スライド用のクラス切り替え
 			var wiper = function(){
 				slide.removeClass('active');
-				slide.filter(':nth-child('+ (slideNum+1) +')').addClass('active').css({
+				slide.filter(':nth-child('+ (opts.slideNum+1) +')').addClass('active').css({
 					'backface-visibility': 'hidden',
 					'will-change': 'clip',
 					'z-index':'2'
 				});
 				if(opts.direction === 'horizontal'){
-					if(backFlag === true){
+					if(opts.backFlag === true){
 						toRight();
 					}else{
 						toLeft();
 					}
 				}
 				else if(opts.direction === 'vertical') {
-					if(backFlag === true){
+					if(opts.backFlag === true){
 						toTop();
 					}else{
 						toBottom();
 					}
 				}else if(opts.direction === 'four'){
-					if(backFlag === true){
-						switch((slideNum+1)%4){
+					if(opts.backFlag === true){
+						switch((opts.slideNum+1)%4){
 							case 3:
 								toLeft();
 								break;
@@ -69,7 +73,7 @@ created: 2019/02/23
 								break;
 						}
 					}else{
-						switch((slideNum+1)%4){
+						switch((opts.slideNum+1)%4){
 							case 0:
 								toRight();
 								break;
@@ -85,8 +89,8 @@ created: 2019/02/23
 						}
 					}
 				}else if(opts.direction === 'custom'){
-					if(backFlag === true){
-						backNum = (slideNum === length) ? 0 : slideNum+1;
+					if(opts.backFlag === true){
+						backNum = (opts.slideNum === opts.slideLength) ? 0 : opts.slideNum+1;
 						switch(slide.filter(':nth-child('+ (backNum+1) +')').data('dir')){
 							case 'toLeft':
 								toRight();
@@ -102,7 +106,7 @@ created: 2019/02/23
 								break;
 						}
 					}else{
-						switch(slide.filter(':nth-child('+ (slideNum+1) +')').data('dir')){
+						switch(slide.filter(':nth-child('+ (opts.slideNum+1) +')').data('dir')){
 							case 'toLeft':
 								toLeft();
 								break;
@@ -125,16 +129,16 @@ created: 2019/02/23
 						opts.transition
 					)
 				}
-				//console.log(backFlag);
+				//console.log(opts.backFlag);
 				slidesWrap.find('.pager li button').removeClass('current');
-				slidesWrap.find('.pager li').filter(':nth-child('+ (slideNum+1) +')').find('button').addClass('current');
+				slidesWrap.find('.pager li').filter(':nth-child('+ (opts.slideNum+1) +')').find('button').addClass('current');
 				if (typeof options.slideBefore === 'function') {
-					options.slideBefore(slideNum,length);
+					options.slideBefore(opts.slideNum,opts.slideLength);
 				}
 				if (typeof options.slideAfter === 'function') {
 					setTimeout(
 						function(){
-							options.slideAfter(slideNum,length);
+							options.slideAfter(opts.slideNum,opts.slideLength);
 						}
 						,options.transition
 					);
@@ -144,11 +148,11 @@ created: 2019/02/23
 			//自動再生
 			if(opts.auto === true){
 				var slideNumSet = function(){
-					backFlag = false;
-					if(slideNum < length){
-						slideNum++;
+					opts.backFlag = false;
+					if(opts.slideNum < opts.slideLength){
+						opts.slideNum++;
 					} else {
-						slideNum = 0;
+						opts.slideNum = 0;
 					}
 					wiper();
 				};
@@ -193,7 +197,7 @@ created: 2019/02/23
 			});
 			
 			var toRight = function(){
-				slide.filter(':nth-child('+ (slideNum+1) +')').css({
+				slide.filter(':nth-child('+ (opts.slideNum+1) +')').css({
 					clip:'rect(0,0,'+slideH+'px,0)'
 				}).animate(
 					{zIndex: slideW},
@@ -213,7 +217,7 @@ created: 2019/02/23
 			};
 		
 			var toLeft = function(){
-				slide.filter(':nth-child('+ (slideNum+1) +')').css({
+				slide.filter(':nth-child('+ (opts.slideNum+1) +')').css({
 					clip:'rect(0, '+slideW+'px, '+slideH+'px, '+slideW+'px)'
 				}).animate(
 					{zIndex: slideW},
@@ -233,7 +237,7 @@ created: 2019/02/23
 			};
 		
 			var toBottom = function(){
-				slide.filter(':nth-child('+ (slideNum+1) +')').css({
+				slide.filter(':nth-child('+ (opts.slideNum+1) +')').css({
 					clip:'rect(0, '+slideW+'px,0,0)'
 				}).animate(
 					{zIndex: slideH},
@@ -253,7 +257,7 @@ created: 2019/02/23
 			};
 		
 			var toTop = function(){
-				slide.filter(':nth-child('+ (slideNum+1) +')').css({
+				slide.filter(':nth-child('+ (opts.slideNum+1) +')').css({
 					clip:'rect('+slideH+'px, '+slideW+'px,'+slideH+'px,0)'
 				}).animate(
 					{zIndex: slideH},
@@ -290,22 +294,22 @@ created: 2019/02/23
 				var controllerHTML = '<div class="controlls">' + controllL + controllR + '<div>';
 				slidesWrap.append(controllerHTML);
 				slidesWrap.find('.prevBtn').click(function(){
-					if(slideNum === 0){
-						slideNum = length;
+					if(opts.slideNum === 0){
+						opts.slideNum = opts.slideLength;
 					}else{
-						slideNum--
+						opts.slideNum--
 					}
-					backFlag = true;
+					opts.backFlag = true;
 					timerReset();
 					wiper();
 				});
 				slidesWrap.find('.nextBtn').click(function(){
-					if(slideNum === length){
-						slideNum = 0;
+					if(opts.slideNum === opts.slideLength){
+						opts.slideNum = 0;
 					}else{
-						slideNum++;
+						opts.slideNum++;
 					}
-					backFlag = false;
+					opts.backFlag = false;
 					timerReset();
 					wiper();
 				});
@@ -314,7 +318,7 @@ created: 2019/02/23
 			//ページャー作成
 			if(opts.pager === true){
 				var pagerHTML = '';
-				for(var i=0;i<length+1;i++){
+				for(var i=0;i<opts.slideLength+1;i++){
 					var pagerLength = i+1;
 					pagerHTML += '<li><button>' + pagerLength + '</button></li>';
 				}
@@ -325,8 +329,8 @@ created: 2019/02/23
 				slidesWrap.find('.pager button').click(function(){
 					console.log(slidesWrap.index());
 					if(!$(this).hasClass('current')){
-						backFlag = ($(this).parent().index() < slideNum) ? true : false;
-						slideNum = $(this).parent().index();
+						opts.backFlag = ($(this).parent().index() < opts.slideNum) ? true : false;
+						opts.slideNum = $(this).parent().index();
 						timerReset();
 						wiper();
 					}
