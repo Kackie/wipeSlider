@@ -41,9 +41,9 @@ created: 2019/02/23
 				});
 				if(opts.direction === 'horizontal'){
 					if(backFlag === true){
-						toLeft();
-					}else{
 						toRight();
+					}else{
+						toLeft();
 					}
 				}
 				else if(opts.direction === 'vertical') {
