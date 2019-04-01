@@ -133,12 +133,16 @@ created: 2019/02/23
 				slidesWrap.find('.pager li button').removeClass('current');
 				slidesWrap.find('.pager li').filter(':nth-child('+ (opts.slideNum+1) +')').find('button').addClass('current');
 				if (typeof options.slideBefore === 'function') {
-					options.slideBefore(opts.slideNum,opts.slideLength);
+					var	slideNum = opts.slideNum,
+							slideLength = opts.slideLength;
+					options.slideBefore(slideNum,slideLength);
 				}
 				if (typeof options.slideAfter === 'function') {
+					var	slideNum = opts.slideNum,
+							slideLength = opts.slideLength;
 					setTimeout(
 						function(){
-							options.slideAfter(opts.slideNum,opts.slideLength);
+							options.slideAfter(slideNum,slideLength);
 						}
 						,options.transition
 					);
