@@ -79,15 +79,15 @@ $('.js_wiper').wipeSlider({
 |引数|内容|
 |---|---|
 |slideNum|activeのスライドのindex番号を返します。|
-|length|スライダーのスライド数を返します。|
+|slideLength|スライダーのスライド数を返します。|
 
 下記のような記述になります。
 
 ``` jQuery
-slideBefore : function(slideNum,length){
+slideBefore : function(slideNum,slideLength){
     console.log('スライドなう');
 },
-slideAfter : function(slideNum,length){
+slideAfter : function(slideNum,slideLength){
     console.log('スライド完了');
 }
 ```
