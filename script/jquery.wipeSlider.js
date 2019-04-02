@@ -3,7 +3,7 @@ Author : Kackie(https://github.com/Kackie)
 created: 2019/02/23
 //////////////////////////////////////////*/
 ;(function($){
-    $.fn.wipeSlider = function(options){
+  $.fn.wipeSlider = function(options){
 		$.fn.wipeSlider.defaults = {
 			transition : 500,
 			auto : false,
@@ -301,7 +301,7 @@ created: 2019/02/23
 					if(opts.slideNum === 0){
 						opts.slideNum = opts.slideLength;
 					}else{
-						opts.slideNum--
+						opts.slideNum--;
 					}
 					opts.backFlag = true;
 					timerReset();
