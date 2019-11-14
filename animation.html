@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<link rel="stylesheet" href="css/wipeSlider.css">
+<style>
+.slides{
+    position: relative;
+}
+.slides .slide{
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.slides .slide:first-child{
+}
+.slides .slide.active{
+    animation:display 1s both;
+    z-index: 1;
+}
+@keyframes display{
+    0%{
+        transform:scale(0.8);
+        opacity:0;
+    }
+    100%{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="slides js_wiper">
+<div class="slide" style="background:yellow"></div>
+<div class="slide" style="background:red"></div>
+<div class="slide" style="background:green"></div>
+</div>
+
+
+<script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+<script src="script/jquery.wipeSlider.js"></script>
+<script>
+$(window).on('load', function(){
+    
+$('.js_wiper').wipeSlider({
+    transition : 1000,
+    duration : 2000,
+    auto : true,
+    pager : true,
+    controls : true,
+    direction : 'test',
+    slideBefore : function(slideNum,slideLength){
+        console.log(slideNum,slideLength);
+    },
+    slideAfter : function(slideNum,slideLength){
+        console.log(slideNum,slideLength);
+    }
+});
+
+});
+</script>
+</body>
+</html>
