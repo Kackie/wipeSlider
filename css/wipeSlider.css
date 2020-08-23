@@ -3,6 +3,7 @@ position: relative;
 }
 .slidesWrap .slides{
 position: relative;
+z-index: 1;
 }
 .slidesWrap .slides .slide{
 position: absolute;

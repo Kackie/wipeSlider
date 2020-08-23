@@ -14,7 +14,8 @@ created: 2019/02/23
 			easing : 'linear',
 			slideLength : 0,
 			slideNum : 0,
-			backFlag : false
+			backFlag : false,
+			variable : false,
 		};
 		var opts = $.extend({}, $.fn.wipeSlider.defaults, options);
 		
@@ -26,8 +27,8 @@ created: 2019/02/23
 					slidesWrap.children('.slides')
 					:slidesWrap,
 				slide = slides.children('.slide'),
-				slideW = slide.outerWidth(true),
-				slideH = slide.outerHeight(true);
+				slideW,
+				slideH;
 
 			opts.slideLength = slide.length - 1,
 			opts.slideNum = 0,	
@@ -180,19 +181,52 @@ created: 2019/02/23
 					}, 1000);
 				}
 			};
-			//スライドのアニメーション作成
-			slidesWrap.css({
-				width:slideW
+			
+			//スライドの幅固定と、画面リサイズ時の調整
+			function slideInit(){
+				if(opts.variable){
+
+				}else{
+					slideW = slide.outerWidth(true);
+					slideH = slide.outerHeight(true);
+					slidesWrap.css({
+						width:slideW
+					});
+					slidesWrap.css({
+						width:slideW
+					});
+					slides.css({
+						width:slideW
+					});
+				}
+				
+				slideW = slide.outerWidth(true);
+				slideH = slide.outerHeight(true);
+					
+				slidesWrap.css({
+					// width:slideW,
+					height:slideH
+				});
+				
+				slides.css({
+					height:slideH
+				});
+				
+				slide.css({
+					// width:slideW,
+					opacity:1
+				});
+			}
+			slideInit();
+
+			var resizeTimer = null;
+			$(window).on('resize', function() {
+				clearTimeout(resizeTimer);
+				resizeTimer = setTimeout(function() {
+					slideInit();
+				}, 200);
 			});
-			slides.css({
-				width:slideW,
-				height:slideH
-			});
-			slide.css({
-				width:slideW,
-				height:slideH,
-				opacity:1
-			});
+
 			slide.filter(':first-child').css({
 				'z-index':2
 			});
@@ -200,6 +234,7 @@ created: 2019/02/23
 				'z-index':1
 			});
 			
+			//スライドのアニメーション作成
 			var toRight = function(){
 				slide.filter(':nth-child('+ (opts.slideNum+1) +')').css({
 					clip:'rect(0,0,'+slideH+'px,0)'
